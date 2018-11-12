@@ -41,27 +41,27 @@ object Sorting {
 
  def quickSort[T](inputList: mutable.IndexedSeq[T])(implicit ordering: Ordering[T]): Unit = {
 
-     def makeQSorting(a: mutable.IndexedSeq[T], l: Int, r: Int)(implicit ordering: Ordering[T]): Unit = {
+     def makeQSorting(l: Int, r: Int)(implicit ordering: Ordering[T]): Unit = {
        if (l < r) {
-         val q = partition(a, l, r)
-         makeQSorting(a, l, q)
-         makeQSorting(a, q + 1, r)
+         val q = partition(l, r)
+         makeQSorting(l, q)
+         makeQSorting(q + 1, r)
        }
      }
 
-    def partition(a: mutable.IndexedSeq[T], l: Int, r: Int)(implicit ordering: Ordering[T]): Int = {
-      val v = a((l + r) / 2)
+    def partition(l: Int, r: Int)(implicit ordering: Ordering[T]): Int = {
+      val v = inputList((l + r) / 2)
       var i = l
       var j = r
       while (i <= j) {
-        while (ordering.compare(a(i), v) < 0)
+        while (ordering.compare(inputList(i), v) < 0)
           i += 1
-        while (ordering.compare(a(j), v) > 0)
+        while (ordering.compare(inputList(j), v) > 0)
           j -= 1
         if (i < j) {
-          val tmp = a(i)
-          a(i) = a(j)
-          a(j) = tmp
+          val tmp = inputList(i)
+          inputList(i) = inputList(j)
+          inputList(j) = tmp
           i += 1
           j -= 1
         }
@@ -71,7 +71,6 @@ object Sorting {
       j
    }
 
-   makeQSorting(inputList, 0, inputList.length - 1)
+   makeQSorting(0, inputList.length - 1)
  }
-
 }
